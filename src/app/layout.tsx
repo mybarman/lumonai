@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { LucideFileText, LucideMessageCircle } from "lucide-react";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +31,36 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="flex h-screen">
+          {/* Sidebar */}
+          <div className="w-64 border-r bg-background">
+            <div className="flex h-16 items-center border-b px-6">
+              <h2 className="text-lg font-semibold">Dashboard</h2>
+            </div>
+            <nav className="space-y-1 p-4">
+              <Link href="/chat">
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <LucideMessageCircle className="h-5 w-5" />
+                  Chat
+                </Button>
+              </Link>
+              <Link href="/documents">
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <LucideFileText className="h-5 w-5" />
+                  Documents
+                </Button>
+              </Link>
+            </nav>
+          </div>
+
+          {/* Main content */}
+          <div className="flex-1 overflow-auto">
+            <main className="p-6">
+              {children}
+              <Toaster />
+            </main>
+          </div>
+        </div>
       </body>
     </html>
   );
